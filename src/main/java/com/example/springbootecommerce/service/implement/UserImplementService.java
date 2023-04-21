@@ -1,6 +1,6 @@
 package com.example.springbootecommerce.service.implement;
 
-import com.example.springbootecommerce.pojo.requests.UserRequest;
+import com.example.springbootecommerce.pojo.entity.User;
 import com.example.springbootecommerce.pojo.entity.Role;
 import com.example.springbootecommerce.repository.RoleRepository;
 import com.example.springbootecommerce.repository.UserRepository;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -30,7 +31,7 @@ public class UserImplementService implements UserService {
         return users;
     }
     @Override
-    public com.example.springbootecommerce.pojo.entity.User saveUser(UserRequest userDTO){
+    public com.example.springbootecommerce.pojo.entity.User saveUser(User userDTO){
         Date date = new Date();
         com.example.springbootecommerce.pojo.entity.User user = new com.example.springbootecommerce.pojo.entity.User();
         String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
@@ -41,9 +42,26 @@ public class UserImplementService implements UserService {
         user.setCard(userDTO.getCard());
         user.setName(userDTO.getName());
         user.setCreatedAt(date);
-        Role role_user = roleRepository.findRoleByName(userDTO.getRole());
+        Role role_user = roleRepository.findRoleByName(String.valueOf(userDTO.getRole()));
         user.setRole(role_user);
         userRepository.save(user);
         return user;
     }
+
+    @Override
+    public boolean existsById(Long id) {
+        return false;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+
+    }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return Optional.empty();
+    }
+
+
 }
