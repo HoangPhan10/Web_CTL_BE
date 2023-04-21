@@ -49,6 +49,7 @@ public class SecurityConfig {
                         auth -> auth
                                 .requestMatchers("/auth/login").permitAll()
                                 .requestMatchers("/users/*").permitAll()
+                                .requestMatchers("/users").permitAll()
                                 .requestMatchers("/role").permitAll()
                                 .requestMatchers("/role/save").permitAll()
                                 .requestMatchers("/users/export/csv").permitAll()
