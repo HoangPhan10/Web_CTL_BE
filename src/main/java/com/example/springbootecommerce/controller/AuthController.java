@@ -2,6 +2,7 @@ package com.example.springbootecommerce.controller;
 
 import com.example.springbootecommerce.pojo.requests.LoginRequest;
 import com.example.springbootecommerce.pojo.responses.JWTResponse;
+import com.example.springbootecommerce.pojo.responses.ObjectResponse;
 import com.example.springbootecommerce.security.JWTGenerator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,13 @@ public class AuthController {
     @Autowired
     private JWTGenerator jwtGenerator;
     @PostMapping("/login")
-    public ResponseEntity<JWTResponse> login(@RequestBody @Valid LoginRequest loginDTO){
+    public ResponseEntity<ObjectResponse> login(@RequestBody @Valid LoginRequest loginDTO){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getEmail(),loginDTO.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtGenerator.generateToken(authentication);
-        return new ResponseEntity<>(new JWTResponse(token), HttpStatus.OK);
+        return ResponseEntity.status(200).body(
+                new ObjectResponse(HttpStatus.OK,"Login successfully",new JWTResponse(token))
+        );
     }
+
 }
