@@ -1,6 +1,7 @@
 package com.example.springbootecommerce.controller;
 
 import com.example.springbootecommerce.pojo.entity.User;
+import com.example.springbootecommerce.pojo.requests.JwtRequest;
 import com.example.springbootecommerce.pojo.requests.UserRequest;
 import com.example.springbootecommerce.pojo.responses.ObjectResponse;
 import com.example.springbootecommerce.service.UserService;
@@ -21,20 +22,29 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+
     @PostMapping("/save")
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ObjectResponse> saveUser(@Valid @RequestBody UserRequest userDTO) throws IOException {
         User user = userService.saveUser(userDTO);
         return ResponseEntity.status(200).body(
-                new ObjectResponse(HttpStatus.OK,"Create user successfully",user)
+                new ObjectResponse(HttpStatus.OK, "Create user successfully", user)
         );
     }
 
     @GetMapping("")
-    public ResponseEntity<ObjectResponse> getListUsers(){
+    public ResponseEntity<ObjectResponse> getListUsers() {
         List<User> users = userService.listAll();
         return ResponseEntity.status(200).body(
-                new ObjectResponse(HttpStatus.OK,"Query list user successfully",users)
+                new ObjectResponse(HttpStatus.OK, "Query list user successfully", users)
+        );
+    }
+
+    @PostMapping("/get-info")
+    public ResponseEntity<ObjectResponse> getUserByJWT(@RequestBody JwtRequest jwt) throws IOException {
+        User user = userService.getUserByJWT(jwt.getJwt());
+        return ResponseEntity.status(200).body(
+                new ObjectResponse(HttpStatus.OK, "Query user successfully", user)
         );
     }
 }

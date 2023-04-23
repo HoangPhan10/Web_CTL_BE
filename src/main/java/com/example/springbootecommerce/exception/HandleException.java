@@ -56,15 +56,15 @@ public class HandleException {
                 errorResponse
         );
     }
-//    @ExceptionHandler(Exception.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    public ResponseEntity<ErrorResponse> exception(Exception exception){
-//        log.error("Exception -> {}",exception.getMessage());
-//        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST,exception.getMessage());
-//        return ResponseEntity.badRequest().body(
-//                errorResponse
-//        );
-//    }
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> exception(Exception exception){
+        log.error("Exception -> {}",exception.getMessage());
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST,exception.getMessage());
+        return ResponseEntity.badRequest().body(
+                errorResponse
+        );
+    }
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> accessDenied(AccessDeniedException exception){
