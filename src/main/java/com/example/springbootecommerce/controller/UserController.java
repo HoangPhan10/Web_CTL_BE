@@ -2,14 +2,20 @@ package com.example.springbootecommerce.controller;
 
 import com.example.springbootecommerce.pojo.entity.User;
 import com.example.springbootecommerce.pojo.requests.JwtRequest;
+import com.example.springbootecommerce.pojo.requests.AccountRegisterRequest;
+import com.example.springbootecommerce.pojo.requests.ResetPasswordRequest;
 import com.example.springbootecommerce.pojo.requests.UserRequest;
+import com.example.springbootecommerce.pojo.requests.UserRequestUpdate;
+import com.example.springbootecommerce.pojo.responses.NotiResponse;
 import com.example.springbootecommerce.pojo.responses.ObjectResponse;
 import com.example.springbootecommerce.service.UserService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.authenticator.SpnegoAuthenticator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -47,4 +53,32 @@ public class UserController {
                 new ObjectResponse(HttpStatus.OK, "Query user successfully", user)
         );
     }
+    @GetMapping("/get")
+    public ResponseEntity<ObjectResponse> getUserById(@RequestParam("id") Long id) {
+        User user = userService.getUserById(id);
+        return ResponseEntity.status(200).body(
+                new ObjectResponse(HttpStatus.OK, "Find User successfully", user)
+        );
+    }
+
+    @PutMapping("/update")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<ObjectResponse> updateUser(@Valid @RequestBody UserRequestUpdate userRequestUpdate, @RequestParam("id") Long id) {
+        User user = userService.updateUser(userRequestUpdate, id);
+        return ResponseEntity.ok().body(
+                new ObjectResponse(HttpStatus.OK, "Update user successfully", user)
+        );
+    }
+
+    @DeleteMapping("/delete")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<NotiResponse> deleteProduct(@PathVariable Long id) {
+        userService.deleteUserById(id);
+        return ResponseEntity.ok().body(
+                new NotiResponse(HttpStatus.OK, "Delete user successfully")
+        );
+    }
+
+
+
 }
