@@ -50,6 +50,8 @@ public class SecurityConfig {
                                 .requestMatchers("/auth/login").permitAll()
                                 .requestMatchers("/auth/*").permitAll()
                                 .requestMatchers("/users/*").permitAll()
+                                .requestMatchers("/address/*").permitAll()
+                                .requestMatchers("/address").permitAll()
                                 .requestMatchers("/users").permitAll()
                                 .requestMatchers("/role").permitAll()
                                 .requestMatchers("/role/save").permitAll()
