@@ -22,7 +22,7 @@ public class HandleException {
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<ErrorResponse> sqlIntegrityConstraintViolationException(Exception exception){
         log.error("exception -> {}",exception.getMessage());
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.CONFLICT,"There is another user having the email");
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.CONFLICT,exception.getMessage());
         return ResponseEntity.badRequest().body(
                 errorResponse
         );
