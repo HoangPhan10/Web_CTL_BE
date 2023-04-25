@@ -1,8 +1,13 @@
 package com.example.springbootecommerce.service.implement;
 
+import com.example.springbootecommerce.exception.RoleNotFoundException;
+import com.example.springbootecommerce.exception.UserNotFoundException;
 import com.example.springbootecommerce.pojo.entity.User;
+import com.example.springbootecommerce.pojo.requests.AccountRegisterRequest;
+import com.example.springbootecommerce.pojo.requests.ResetPasswordRequest;
 import com.example.springbootecommerce.pojo.requests.UserRequest;
 import com.example.springbootecommerce.pojo.entity.Role;
+import com.example.springbootecommerce.pojo.requests.UserRequestUpdate;
 import com.example.springbootecommerce.repository.RoleRepository;
 import com.example.springbootecommerce.repository.UserRepository;
 import com.example.springbootecommerce.security.JWTGenerator;
@@ -46,6 +51,9 @@ public class UserImplementService implements UserService {
         user.setName(userDTO.getName());
         user.setCreatedAt(date);
         Role role_user = roleRepository.findRoleByName(userDTO.getRole());
+        if(role_user == null){
+            throw new RoleNotFoundException("Role not found with id ");
+        }
         user.setRole(role_user);
         userRepository.save(user);
         return user;
@@ -58,4 +66,66 @@ public class UserImplementService implements UserService {
         AtomicReference<User> user = new AtomicReference<>(userRepository.getUserByEmail(email));
         return user.get();
     }
+    public User updateUser(UserRequestUpdate userRequestUpdate, Long id) {
+        return userRepository.findById(id)
+                .map(user -> {
+                    Date date = new Date();
+                    user.setEmail(userRequestUpdate.getEmail());
+                    user.setUsername(userRequestUpdate.getUsername());
+                    user.setPhoto(userRequestUpdate.getPhoto());
+                    user.setCard(userRequestUpdate.getCard());
+                    user.setName(userRequestUpdate.getName());
+                    Role role_user = roleRepository.findRoleByName(userRequestUpdate.getRole());
+                    if(role_user == null){
+                        throw new RoleNotFoundException("Role not found with id ");
+                    }
+                    user.setRole(role_user);
+                    user.setUpdatedAt(date);
+
+                    return userRepository.save(user);
+                })
+                .orElseThrow(() -> new UserNotFoundException("User not found with id " + id));
+    }
+
+
+    @Override
+    public void deleteUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id " + id));
+        userRepository.delete(user);
+    }
+
+    @Override
+    public void resetPassword(ResetPasswordRequest resetPasswordRequest, Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id " + id));
+        String encodedPassword = passwordEncoder.encode("123456");
+        user.setPassword(encodedPassword);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        User user = userRepository.findUserById(id);
+        if(user ==null){
+            throw  new UserNotFoundException("User not found with id " + id);
+        }
+        return user;
+    }
+
+    @Override
+    public User register(AccountRegisterRequest account) {
+        User user = new User();
+        user.setUsername(account.getUsername());
+        user.setEmail(account.getEmail());
+        String encodedPassword = passwordEncoder.encode(account.getPassword());
+        user.setPassword(encodedPassword);
+        user.setName(account.getName());
+        user.setCard(account.getCard());
+        Role custumer_role = roleRepository.findRoleByName("customer");
+        user.setRole(custumer_role);
+        user.setCreatedAt(new Date());
+        userRepository.save(user);
+        return  user;
+    }
+
 }
