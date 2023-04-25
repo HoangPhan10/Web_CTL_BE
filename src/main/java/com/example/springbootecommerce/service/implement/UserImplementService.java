@@ -41,7 +41,7 @@ public class UserImplementService implements UserService {
     @Override
     public com.example.springbootecommerce.pojo.entity.User saveUser(UserRequest userDTO){
         Date date = new Date();
-        com.example.springbootecommerce.pojo.entity.User user = new com.example.springbootecommerce.pojo.entity.User();
+        User user = new User();
         String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
         user.setEmail(userDTO.getEmail());
         user.setPassword(encodedPassword);
