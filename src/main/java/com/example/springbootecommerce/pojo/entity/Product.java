@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 @Data
 public class Product {
     @Id
@@ -15,6 +15,7 @@ public class Product {
 
     @Column(nullable = false, length =100)
     private String title;
+
 
     @Column(nullable = false, length =20)
     private Float price;
@@ -28,6 +29,9 @@ public class Product {
     private Date updatedAt;
 
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private User user;
+    private Shop shop;
+
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private Type type;
 
 }
