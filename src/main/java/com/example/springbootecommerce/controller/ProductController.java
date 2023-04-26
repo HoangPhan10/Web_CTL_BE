@@ -3,6 +3,7 @@ package com.example.springbootecommerce.controller;
 
 import com.example.springbootecommerce.pojo.entity.Product;
 import com.example.springbootecommerce.pojo.entity.Type;
+import com.example.springbootecommerce.pojo.entity.User;
 import com.example.springbootecommerce.pojo.requests.*;
 import com.example.springbootecommerce.pojo.responses.NotiResponse;
 import com.example.springbootecommerce.pojo.responses.ObjectResponse;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.lang.model.element.TypeElement;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -26,6 +28,14 @@ public class ProductController {
     private ProductService productService;
     @Autowired
     private TypeService typeService;
+
+    @GetMapping("")
+    public ResponseEntity<ObjectResponse> getListProduct() {
+        List<Product> products = productService.listAll();
+        return ResponseEntity.status(200).body(
+                new ObjectResponse(HttpStatus.OK, "Query list product successfully", products)
+        );
+    }
 
     @PostMapping("/save")
     public ResponseEntity<ObjectResponse>  createProduct(@Valid @RequestBody ProductRequest productRequest){

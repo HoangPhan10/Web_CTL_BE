@@ -15,8 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-
-
+import java.util.List;
 @Service
 public class ProductImplementService implements ProductService {
     @Autowired
@@ -71,5 +70,10 @@ public class ProductImplementService implements ProductService {
         product.setQuantity(productUpdateRequesttRequestRequest.getQuantity());
         product.setDescription(productUpdateRequesttRequestRequest.getDescription());
         return productRepository.save(product);
+    }
+    @Override
+    public List<Product> listAll() {
+        List<Product> products = productRepository.findAll();
+        return products;
     }
 }
