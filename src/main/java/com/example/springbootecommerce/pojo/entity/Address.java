@@ -23,6 +23,6 @@ public class Address {
     @Column(name = "name_receiver",nullable = false)
     private String name_receiver;
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 }

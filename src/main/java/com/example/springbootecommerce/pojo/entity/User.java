@@ -30,7 +30,7 @@ public class User {
     private String name;
     private Date createdAt;
     private Date updatedAt;
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
 }
