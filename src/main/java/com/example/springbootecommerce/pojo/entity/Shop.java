@@ -19,10 +19,10 @@ public class Shop {
     @Column(length = 45,nullable = false, unique = true)
     private String Name;
 
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
     private User user;
 
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
     private Address address;
 
 }
