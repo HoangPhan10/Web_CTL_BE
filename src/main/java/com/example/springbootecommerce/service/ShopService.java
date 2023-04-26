@@ -10,4 +10,5 @@ public interface ShopService {
     Shop createShop(ShopRequest request);
 
     Shop getShopByUserId(Long id);
+
 }
