@@ -64,19 +64,8 @@ public class ProductDetailImplementService implements ColorService, ImageService
 
     @Override
     public List<Size> listSizeByProductID(Long id) {
-        Product product = productRepository.findProductById(id);
-        if(product == null){
-            throw new RuntimeException("Cannot find product by id: " + id);
-        }else {
-            List<Size> sizes = sizeRepository.findAll();
-            List<Size> sizes1 = new ArrayList<>();
-            for(Size s : sizes){
-                if (s.getProduct().getId() == id){
-                    sizes1.add(s);
-                }
-            }
-            return sizes1;
-        }
+        List<Size> sizes = sizeRepository.findSizesByProductId(id);
+        return sizes;
     }
 
 
@@ -111,19 +100,8 @@ public class ProductDetailImplementService implements ColorService, ImageService
 
     @Override
     public List<Color> listColorByProductID(Long id) {
-        Product product = productRepository.findProductById(id);
-        if(product == null){
-            throw new RuntimeException("Cannot find product by id: " + id);
-        }else {
-            List<Color> colors = colorRepository.findAll();
-            List<Color> colors1 = new ArrayList<>();
-            for(Color c : colors){
-                if(c.getProduct().getId() == id){
-                    colors1.add(c);
-                }
-            }
-            return colors1;
-        }
+        List<Color> colors = colorRepository.findColorByProductId(id);
+        return colors;
     }
 
     @Override
@@ -169,19 +147,8 @@ public class ProductDetailImplementService implements ColorService, ImageService
 
     @Override
     public List<Image> listImageByProductID(Long id) {
-        Product product = productRepository.findProductById(id);
-        if(product == null){
-            throw new UserNotFoundException("Cannot find product by id: " + id);
-        }else{
-            List<Image> images = imageRepository.findAll();
-            List<Image> images1 = new ArrayList<>();
-            for(Image i : images){
-                if(i.getProduct().getId() == id){
-                    images1.add(i);
-                }
-            }
-            return images1;
-        }
+        List<Image> images = imageRepository.findImageByProductId(id);
+        return images;
     }
 
 

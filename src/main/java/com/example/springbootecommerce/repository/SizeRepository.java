@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface SizeRepository extends JpaRepository<Size,Long> {
     Size findSizeById(Long id);
+    List<Size> findSizesByProductId(Long id);
 }
