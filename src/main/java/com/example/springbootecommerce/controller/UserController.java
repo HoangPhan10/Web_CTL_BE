@@ -1,9 +1,12 @@
 package com.example.springbootecommerce.controller;
 
 import com.example.springbootecommerce.pojo.entity.User;
+<<<<<<< HEAD
 import com.example.springbootecommerce.pojo.requests.JwtRequest;
 import com.example.springbootecommerce.pojo.requests.AccountRegisterRequest;
 import com.example.springbootecommerce.pojo.requests.ResetPasswordRequest;
+=======
+>>>>>>> 92f7544 ([ADD] api address)
 import com.example.springbootecommerce.pojo.requests.UserRequest;
 import com.example.springbootecommerce.pojo.requests.UserRequestUpdate;
 import com.example.springbootecommerce.pojo.responses.NotiResponse;
@@ -34,7 +37,19 @@ public class UserController {
     public ResponseEntity<ObjectResponse> saveUser(@Valid @RequestBody UserRequest userDTO) throws IOException {
         User user = userService.saveUser(userDTO);
         return ResponseEntity.status(200).body(
+<<<<<<< HEAD
                 new ObjectResponse(HttpStatus.OK, "Create user successfully", user)
+=======
+                new ObjectResponse(HttpStatus.OK,"Create user successfully",user)
+        );
+    }
+
+    @GetMapping("")
+    public ResponseEntity<ObjectResponse> getListUsers(){
+        List<User> users = userService.listAll();
+        return ResponseEntity.status(200).body(
+                new ObjectResponse(HttpStatus.OK,"Query list user successfully",users)
+>>>>>>> 92f7544 ([ADD] api address)
         );
     }
 
@@ -72,7 +87,7 @@ public class UserController {
 
     @DeleteMapping("/delete")
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<NotiResponse> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<NotiResponse> deleteUser(@RequestParam("id") Long id) {
         userService.deleteUserById(id);
         return ResponseEntity.ok().body(
                 new NotiResponse(HttpStatus.OK, "Delete user successfully")

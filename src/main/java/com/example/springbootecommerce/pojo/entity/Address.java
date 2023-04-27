@@ -23,6 +23,12 @@ public class Address {
     @Column(name = "name_receiver",nullable = false)
     private String name_receiver;
 
+<<<<<<< HEAD
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User user;
+=======
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private User user;
+
+>>>>>>> 92f7544 ([ADD] api address)
 }
