@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -24,5 +26,14 @@ public class Shop {
 
     @OneToOne(fetch = FetchType.EAGER)
     private Address address;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name="shops_transports",
+            joinColumns = @JoinColumn(name="shop_id"),
+            inverseJoinColumns = @JoinColumn(name="transport_id")
+    )
+    private List<Transport> transports = new ArrayList<>();
+
 
 }

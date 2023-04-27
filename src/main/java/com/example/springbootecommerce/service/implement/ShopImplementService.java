@@ -3,16 +3,21 @@ package com.example.springbootecommerce.service.implement;
 import com.example.springbootecommerce.exception.UserNotFoundException;
 import com.example.springbootecommerce.pojo.entity.Address;
 import com.example.springbootecommerce.pojo.entity.Shop;
+import com.example.springbootecommerce.pojo.entity.Transport;
 import com.example.springbootecommerce.pojo.entity.User;
 import com.example.springbootecommerce.pojo.requests.ShopRequest;
 import com.example.springbootecommerce.repository.AddressRepository;
 import com.example.springbootecommerce.repository.ShopRepository;
+import com.example.springbootecommerce.repository.TransportRepository;
 import com.example.springbootecommerce.repository.UserRepository;
 import com.example.springbootecommerce.service.ShopService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -25,6 +30,8 @@ public class ShopImplementService implements ShopService {
     private AddressRepository addressRepository;
     @Autowired
     private ShopRepository shopRepository;
+    @Autowired
+    private TransportRepository transportRepository;
 
     @Override
     public Shop createShop(ShopRequest request) {
@@ -41,6 +48,12 @@ public class ShopImplementService implements ShopService {
         shop.setUser(user);
         shop.setAddress(address);
         shop.setName(request.getName());
+        List<Transport> ts = new ArrayList<>();
+        for(Long id_transport : request.getList_transport()){
+            Transport transport1 = transportRepository.findTransportById(id_transport);
+            ts.add(transport1);
+        }
+        shop.setTransports(ts);
         return shopRepository.save(shop);
     }
 
