@@ -52,8 +52,6 @@ public class SecurityConfig {
                                 .requestMatchers("/users/*").permitAll()
                                 .requestMatchers("/address/*").permitAll()
                                 .requestMatchers("/address").permitAll()
-<<<<<<< HEAD
-=======
                                 .requestMatchers("/shop/*").permitAll()
                                 .requestMatchers("/shop").permitAll()
                                 .requestMatchers("/product_detail/*").permitAll()
@@ -64,7 +62,6 @@ public class SecurityConfig {
                                 .requestMatchers("/detail").permitAll()
                                 .requestMatchers("/transport/*").permitAll()
                                 .requestMatchers("/transport").permitAll()
->>>>>>> 7b095ad (update transport)
                                 .requestMatchers("/users").permitAll()
                                 .requestMatchers("/role").permitAll()
                                 .requestMatchers("/role/save").permitAll()
