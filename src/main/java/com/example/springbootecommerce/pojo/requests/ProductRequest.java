@@ -31,4 +31,7 @@ public class ProductRequest {
 
     @NotNull(message = "id_type not null")
     private Long id_type;
+
+    @NotNull(message = "product_info_id not null")
+    private Long product_info_id;
 }

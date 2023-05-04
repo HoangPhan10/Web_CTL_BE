@@ -24,6 +24,7 @@ public class Product {
 
     @Column(nullable = false, length =20)
     private long quantity;
+
     private Date createdAt;
     private Date updatedAt;
 
@@ -33,4 +34,6 @@ public class Product {
     @ManyToOne(fetch = FetchType.EAGER)
     private Type type;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    private ProductInformation productInformation;
 }
