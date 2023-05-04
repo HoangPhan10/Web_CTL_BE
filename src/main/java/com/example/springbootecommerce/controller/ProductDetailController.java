@@ -1,14 +1,12 @@
 package com.example.springbootecommerce.controller;
 
-import com.example.springbootecommerce.pojo.entity.Color;
-import com.example.springbootecommerce.pojo.entity.Image;
-import com.example.springbootecommerce.pojo.entity.Size;
-import com.example.springbootecommerce.pojo.entity.User;
+import com.example.springbootecommerce.pojo.entity.*;
 import com.example.springbootecommerce.pojo.requests.*;
 import com.example.springbootecommerce.pojo.responses.NotiResponse;
 import com.example.springbootecommerce.pojo.responses.ObjectResponse;
 import com.example.springbootecommerce.service.ColorService;
 import com.example.springbootecommerce.service.ImageService;
+import com.example.springbootecommerce.service.ProductInformationService;
 import com.example.springbootecommerce.service.SizeService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +28,31 @@ public class ProductDetailController {
     private SizeService sizeService;
     @Autowired
     private ImageService imageService;
+    @Autowired
+    private ProductInformationService productInformationService;
+
+    @PostMapping("create_product_info")
+    public ResponseEntity<ObjectResponse> createProductInfo(@Valid @RequestBody  ProductInformationRequest productInformationRequest){
+        ProductInformation productInfo = productInformationService.createProductInfo(productInformationRequest);
+        return ResponseEntity.status(200).body(
+                new ObjectResponse(HttpStatus.OK, "Create Size successfully", productInfo)
+        );
+    }
+    @DeleteMapping("delete_product_info")
+    public ResponseEntity<NotiResponse> deleteProductInfo(@RequestParam("id") Long id){
+        productInformationService.deleteProductInfo(id);
+        return ResponseEntity.status(200).body(
+                new NotiResponse(HttpStatus.OK, "Delete product_info successfully")
+        );
+    }
+    @PostMapping("/update_product_info")
+    public ResponseEntity<ObjectResponse> updateProductInfo(@Valid @RequestBody ProductInformationRequest productInformationRequest,
+                                                            @RequestParam("id") Long id){
+        ProductInformation productInformation = productInformationService.updateProductInfo(productInformationRequest,id);
+        return ResponseEntity.status(200).body(
+                new ObjectResponse(HttpStatus.OK, "Update product_info successfully", productInformation)
+        );
+    }
 
     @PostMapping("/create_size")
     public ResponseEntity<ObjectResponse> createSize(@Valid @RequestBody SizeRequest sizeRequest){
