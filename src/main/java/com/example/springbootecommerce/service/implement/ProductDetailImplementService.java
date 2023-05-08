@@ -42,7 +42,7 @@ public class ProductDetailImplementService implements ColorService, ImageService
             throw new RuntimeException("Cannot find product by id: " + sizeRequest.getId_product());
         }
         size.setProduct(product);
-        size.setSize(sizeRequest.getSize());
+        size.setSizes(sizeRequest.getSizes());
 
         return sizeRepository.save(size);
     }
@@ -78,7 +78,7 @@ public class ProductDetailImplementService implements ColorService, ImageService
             throw new RuntimeException("Cannot find product by id: " + colorRequest.getId_product());
         }
         color.setProduct(product);
-        color.setColor(colorRequest.getColor());
+        color.setColors(colorRequest.getColors());
 
         return colorRepository.save(color);
     }
@@ -113,7 +113,7 @@ public class ProductDetailImplementService implements ColorService, ImageService
         }
         image.setProduct(product);
         image.setTitle(imageRequest.getTitle());
-        image.setUrl(imageRequest.getUrl());
+        image.setUrls(imageRequest.getUrls());
 
         return imageRepository.save(image);
     }
@@ -140,7 +140,7 @@ public class ProductDetailImplementService implements ColorService, ImageService
             throw new UserNotFoundException("Cannot find image by id: " + id);
         }
         image.setTitle(imageUpdateRequest.getTitle());
-        image.setUrl(imageUpdateRequest.getUrl());
+        image.setUrls(imageUpdateRequest.getUrls());
 
         return imageRepository.save(image);
     }

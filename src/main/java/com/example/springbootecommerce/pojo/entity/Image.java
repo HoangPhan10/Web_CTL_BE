@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "images")
 @Data
@@ -16,8 +19,10 @@ public class Image {
     @Column(nullable = false, length = 50)
     private String title;
 
-    @Column(nullable = false, length = 200)
-    private String url;
+    @ElementCollection
+    @CollectionTable(name = "image_urls", joinColumns = @JoinColumn(name = "image_id"))
+    @Column(name = "url")
+    private List<String> urls = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Product product;
