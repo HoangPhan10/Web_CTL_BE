@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,5 +15,5 @@ public class ImageUpdateRequest {
     private String title;
 
     @NotNull(message = "url not null")
-    private String url;
+    private List<String> urls;
 }

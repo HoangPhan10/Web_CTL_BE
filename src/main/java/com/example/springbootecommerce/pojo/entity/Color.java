@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name="colors")
 @Data
@@ -13,8 +15,10 @@ public class Color {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, length =20)
-    private String color;
+    @ElementCollection
+    @CollectionTable(name = "color_values", joinColumns = @JoinColumn(name = "color_id"))
+    @Column(name = "color", nullable = false)
+    private List<String> colors;
     @ManyToOne(fetch = FetchType.EAGER)
     private Product product;
 }
