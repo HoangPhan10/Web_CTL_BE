@@ -16,6 +16,7 @@ public interface ProductService {
     Product updateProduct(ProductUpdateRequest productUpdateRequest, Long id);
 
     List<Product> listAll();
+    List<Product> listProductByShopId(Long id);
 
     Product findProductById(Long id);
 }

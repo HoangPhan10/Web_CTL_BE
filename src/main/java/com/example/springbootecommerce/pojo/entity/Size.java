@@ -18,7 +18,7 @@ public class Size {
     @ElementCollection
     @CollectionTable(name = "size_values", joinColumns = @JoinColumn(name = "size_id"))
     @Column(name = "size", nullable = false)
-    private List<Integer> sizes;
+    private List<String> sizes;
     @ManyToOne(fetch = FetchType.EAGER)
     private Product product;
 
