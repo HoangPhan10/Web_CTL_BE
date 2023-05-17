@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @CrossOrigin(maxAge = 3600)
-@RequestMapping("/product_detail")
+@RequestMapping("/product-detail")
 public class ProductDetailController {
     @Autowired
     private ColorService colorService;
@@ -31,21 +31,21 @@ public class ProductDetailController {
     @Autowired
     private ProductInformationService productInformationService;
 
-    @PostMapping("create_product_info")
+    @PostMapping("/create-product-info")
     public ResponseEntity<ObjectResponse> createProductInfo(@Valid @RequestBody  ProductInformationRequest productInformationRequest){
         ProductInformation productInfo = productInformationService.createProductInfo(productInformationRequest);
         return ResponseEntity.status(200).body(
                 new ObjectResponse(HttpStatus.OK, "Create Size successfully", productInfo)
         );
     }
-    @DeleteMapping("delete_product_info")
+    @DeleteMapping("/delete-product-info")
     public ResponseEntity<NotiResponse> deleteProductInfo(@RequestParam("id") Long id){
         productInformationService.deleteProductInfo(id);
         return ResponseEntity.status(200).body(
                 new NotiResponse(HttpStatus.OK, "Delete product_info successfully")
         );
     }
-    @PostMapping("/update_product_info")
+    @PostMapping("/update-product-info")
     public ResponseEntity<ObjectResponse> updateProductInfo(@Valid @RequestBody ProductInformationRequest productInformationRequest,
                                                             @RequestParam("id") Long id){
         ProductInformation productInformation = productInformationService.updateProductInfo(productInformationRequest,id);
@@ -54,14 +54,14 @@ public class ProductDetailController {
         );
     }
 
-    @PostMapping("/create_size")
+    @PostMapping("/create-size")
     public ResponseEntity<ObjectResponse> createSize(@Valid @RequestBody SizeRequest sizeRequest){
         Size size = sizeService.createSize(sizeRequest);
         return ResponseEntity.status(200).body(
                 new ObjectResponse(HttpStatus.OK, "Create Size successfully", size)
         );
     }
-    @DeleteMapping("/delete_size")
+    @DeleteMapping("/delete-size")
     public ResponseEntity<NotiResponse> deleteSize(@RequestParam("id") Long id){
         sizeService.deleteSize(id);
         return ResponseEntity.status(200).body(
@@ -75,7 +75,7 @@ public class ProductDetailController {
                 new ObjectResponse(HttpStatus.OK, "Query list size successfully", sizes)
         );
     }
-    @GetMapping("/product_size")
+    @GetMapping("/product-size")
     public ResponseEntity<ObjectResponse> getSizeByProductId(@RequestParam("id") Long id){
         List<Size> sizes = sizeService.listSizeByProductID(id);
         return ResponseEntity.status(200).body(
@@ -83,7 +83,7 @@ public class ProductDetailController {
         );
     }
 
-    @PostMapping("/create_color")
+    @PostMapping("/create-color")
     public ResponseEntity<ObjectResponse> createColor(@Valid @RequestBody ColorRequest colorRequest){
         Color color = colorService.createColor(colorRequest);
         return ResponseEntity.status(200).body(
@@ -97,14 +97,14 @@ public class ProductDetailController {
                 new ObjectResponse(HttpStatus.OK, "Query list color successfully", colors)
         );
     }
-    @DeleteMapping("/delete_color")
+    @DeleteMapping("/delete-color")
     public ResponseEntity<NotiResponse> deleteColor(@RequestParam("id") Long id){
         colorService.deleteColor(id);
         return ResponseEntity.status(200).body(
                 new NotiResponse(HttpStatus.OK, "Delete color successfully")
         );
     }
-    @GetMapping("/product_color")
+    @GetMapping("/product-color")
     public ResponseEntity<ObjectResponse> getColorByProductId(@RequestParam("id") Long id){
         List<Color> colors = colorService.listColorByProductID(id);
         return ResponseEntity.status(200).body(
@@ -112,7 +112,7 @@ public class ProductDetailController {
         );
     }
 
-    @PostMapping("/create_image")
+    @PostMapping("/create-image")
     public ResponseEntity<ObjectResponse> createImage(@Valid @RequestBody ImageRequest imageRequest){
         Image image = imageService.createImage(imageRequest);
         return ResponseEntity.status(200).body(
@@ -127,14 +127,14 @@ public class ProductDetailController {
                 new ObjectResponse(HttpStatus.OK, "Query list image successfully", images)
         );
     }
-    @DeleteMapping("/delete_image")
+    @DeleteMapping("/delete-image")
     public ResponseEntity<NotiResponse> deleteImage(@RequestParam("id") Long id){
         imageService.deleteImage(id);
         return ResponseEntity.status(200).body(
                 new NotiResponse(HttpStatus.OK, "Delete image successfully")
         );
     }
-    @PostMapping("/update_image")
+    @PostMapping("/update-image")
     public ResponseEntity<ObjectResponse> updateImage(@Valid @RequestBody ImageUpdateRequest imageUpdateRequest, @RequestParam("id") Long id){
         Image image = imageService.updateImage(imageUpdateRequest, id);
         return ResponseEntity.status(200).body(
@@ -142,7 +142,7 @@ public class ProductDetailController {
         );
     }
 
-    @GetMapping("/product_image")
+    @GetMapping("/product-image")
     public ResponseEntity<ObjectResponse> getImageByProductId(@RequestParam("id") Long id){
         List<Image> images = imageService.listImageByProductID(id);
         return ResponseEntity.status(200).body(

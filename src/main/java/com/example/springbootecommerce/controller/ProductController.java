@@ -36,11 +36,18 @@ public class ProductController {
                 new ObjectResponse(HttpStatus.OK, "Query list product successfully", products)
         );
     }
-    @GetMapping("/getProduct_info")
+    @GetMapping("/getProduct-info")
     public ResponseEntity<ObjectResponse> getProductById(@RequestParam("id") Long id) {
         Product product = productService.findProductById(id);
         return ResponseEntity.status(200).body(
                 new ObjectResponse(HttpStatus.OK, "Query list product successfully", product)
+        );
+    }
+    @GetMapping("/shop-by-id")  
+    public ResponseEntity<ObjectResponse> getProductByShopId(@RequestParam("id") Long id) {
+        List<Product> products = productService.listProductByShopId(id);
+        return ResponseEntity.status(200).body(
+                new ObjectResponse(HttpStatus.OK, "Query list product successfully", products)
         );
     }
 
@@ -58,6 +65,13 @@ public class ProductController {
         Type type = typeService.saveType(typeRequest);
         return ResponseEntity.status(200).body(
                 new ObjectResponse(HttpStatus.OK, "Create type successfully", type)
+        );
+    }
+    @GetMapping("/type")
+    public ResponseEntity<ObjectResponse>  listType(){
+        List<Type> types = typeService.listType();
+        return ResponseEntity.status(200).body(
+                new ObjectResponse(HttpStatus.OK, "Query list type successfully", types)
         );
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class SizeRequest {
     @NotNull(message = "Size not null")
-    private List<Integer> sizes;
+    private List<String> sizes;
     @NotNull(message = "id_product not null")
     private Long id_product;
 }

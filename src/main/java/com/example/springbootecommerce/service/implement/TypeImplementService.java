@@ -7,6 +7,8 @@ import com.example.springbootecommerce.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TypeImplementService implements TypeService {
 
@@ -17,5 +19,10 @@ public class TypeImplementService implements TypeService {
         Type type = new Type();
         type.setName(typeRequest.getName());
         return typeRepository.save(type);
+    }
+
+    @Override
+    public List<Type> listType() {
+        return typeRepository.findAll();
     }
 }

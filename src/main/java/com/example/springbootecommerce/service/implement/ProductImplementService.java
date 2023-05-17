@@ -89,6 +89,11 @@ public class ProductImplementService implements ProductService {
     }
 
     @Override
+    public List<Product> listProductByShopId(Long id) {
+        return productRepository.findProductsByShopId(id);
+    }
+
+    @Override
     public Product findProductById(Long id) {
         Product product = productRepository.findProductById(id);
         if(product == null){
