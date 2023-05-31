@@ -24,7 +24,6 @@ public class User {
     private String username;
     @Column(length = 1000)
     private String photo;
-    @Column(length = 45,nullable = false,unique = true)
     private String card;
     @Column(length = 45,nullable = false)
     private String name;

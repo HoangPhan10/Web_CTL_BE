@@ -6,6 +6,8 @@ import com.example.springbootecommerce.pojo.entity.Type;
 import com.example.springbootecommerce.pojo.requests.*;
 import com.example.springbootecommerce.pojo.responses.NotiResponse;
 import com.example.springbootecommerce.pojo.responses.ObjectResponse;
+import com.example.springbootecommerce.pojo.responses.ProductPageResponse;
+import com.example.springbootecommerce.pojo.responses.ProductResponse;
 import com.example.springbootecommerce.service.ProductInformationService;
 import com.example.springbootecommerce.service.ProductService;
 import com.example.springbootecommerce.service.TypeService;
@@ -25,32 +27,39 @@ import java.util.List;
 public class ProductController {
     @Autowired
     private ProductService productService;
-    @Autowired
+    @Autowired  
     private TypeService typeService;
 
 
     @GetMapping("")
     public ResponseEntity<ObjectResponse> getListProduct() {
-        List<Product> products = productService.listAll();
+        List<ProductResponse> products = productService.listAll();
         return ResponseEntity.status(200).body(
                 new ObjectResponse(HttpStatus.OK, "Query list product successfully", products)
         );
     }
     @GetMapping("/getProduct-info")
     public ResponseEntity<ObjectResponse> getProductById(@RequestParam("id") Long id) {
-        Product product = productService.findProductById(id);
+        ProductResponse product = productService.findProductById(id);
         return ResponseEntity.status(200).body(
                 new ObjectResponse(HttpStatus.OK, "Query list product successfully", product)
         );
     }
     @GetMapping("/shop-by-id")  
     public ResponseEntity<ObjectResponse> getProductByShopId(@RequestParam("id") Long id) {
-        List<Product> products = productService.listProductByShopId(id);
+        List<ProductResponse> products = productService.listProductByShopId(id);
         return ResponseEntity.status(200).body(
                 new ObjectResponse(HttpStatus.OK, "Query list product successfully", products)
         );
     }
 
+    @GetMapping("/shop-by-id-page")
+    public ResponseEntity<ObjectResponse> getProductByPage(@RequestParam("page") int page, @RequestParam("limit") int limit, @RequestParam("id") long id) {
+        ProductPageResponse productPageResponse = productService.getProductByPage(page, limit,id);
+        return ResponseEntity.status(200).body(
+                new ObjectResponse(HttpStatus.OK, "Query list product successfully", productPageResponse)
+        );
+    }
     @PostMapping("/save")
     public ResponseEntity<ObjectResponse>  createProduct(@Valid @RequestBody ProductRequest productRequest){
         Product product = productService.saveProduct(productRequest);
