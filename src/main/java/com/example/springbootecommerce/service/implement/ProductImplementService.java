@@ -9,6 +9,7 @@ import com.example.springbootecommerce.pojo.responses.ProductPageResponse;
 import com.example.springbootecommerce.pojo.responses.ProductResponse;
 import com.example.springbootecommerce.repository.*;
 import com.example.springbootecommerce.service.ProductService;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,7 @@ import java.util.List;
 
 @Service
 @Slf4j
+@Transactional
 public class ProductImplementService implements ProductService {
     @Autowired
     private ProductRepository productRepository;
@@ -78,7 +80,7 @@ public class ProductImplementService implements ProductService {
         if(product == null){
             throw new UserNotFoundException("Product cannot find by id : "+ id);
         }
-        productInformationRepository.delete(product.getProductInformation());
+        productInformationRepository.deleteProductInformationById(product.getProductInformation().getId());
 
         List<Image> images = imageRepository.findImageByProductId(id);
         if(images.size() > 0){

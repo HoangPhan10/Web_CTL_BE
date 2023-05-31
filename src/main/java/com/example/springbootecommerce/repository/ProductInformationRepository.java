@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductInformationRepository extends JpaRepository<ProductInformation,Long> {
     ProductInformation findProductInformationById(Long id);
+    void deleteProductInformationById(Long id);
 }
