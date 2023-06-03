@@ -36,9 +36,9 @@ public class AddressController {
         );
     }
 
-    @GetMapping("/{uid}")
-    ResponseEntity<ObjectResponse> findAddressByUserId(@PathVariable Long uid) {
-        Address findAddress = addressService.findAddressByUserId(uid);
+    @GetMapping("/get")
+    ResponseEntity<ObjectResponse> findAddressByUserId(@RequestParam("id") Long id) {
+        List<Address> findAddress = addressService.findAddressByUserId(id);
         if (findAddress != null) {
             return ResponseEntity.status(200).body(
                     new ObjectResponse(HttpStatus.OK, "Query address successfully", findAddress));

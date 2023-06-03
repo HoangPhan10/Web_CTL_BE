@@ -19,7 +19,7 @@ public class Product {
     @Column(nullable = false, length =20)
     private Float price;
 
-    @Column(nullable = false, length =50)
+    @Column(nullable = false, length =1000)
     private String description;
 
     @Column(nullable = false, length =20)

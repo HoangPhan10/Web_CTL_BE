@@ -5,22 +5,36 @@ import com.example.springbootecommerce.pojo.entity.*;
 import com.example.springbootecommerce.pojo.requests.ProductInformationRequest;
 import com.example.springbootecommerce.pojo.requests.ProductRequest;
 import com.example.springbootecommerce.pojo.requests.ProductUpdateRequest;
-import com.example.springbootecommerce.repository.ProductInformationRepository;
-import com.example.springbootecommerce.repository.ProductRepository;
-import com.example.springbootecommerce.repository.ShopRepository;
-import com.example.springbootecommerce.repository.TypeRepository;
+import com.example.springbootecommerce.pojo.responses.ProductPageResponse;
+import com.example.springbootecommerce.pojo.responses.ProductResponse;
+import com.example.springbootecommerce.repository.*;
 import com.example.springbootecommerce.service.ProductService;
+import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
 @Service
+@Slf4j
+@Transactional
 public class ProductImplementService implements ProductService {
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private ImageRepository imageRepository;
+    @Autowired
+    private ColorRepository colorRepository;
+    @Autowired
+    private SizeRepository sizeRepository;
     @Autowired
     private ShopRepository shopRepository;
     @Autowired
@@ -64,7 +78,23 @@ public class ProductImplementService implements ProductService {
     public void deleteProductById(Long id) {
         Product product = productRepository.findProductById(id);
         if(product == null){
-            throw new RuntimeException("Product cannot find by id : "+ id);
+            throw new UserNotFoundException("Product cannot find by id : "+ id);
+        }
+        productInformationRepository.deleteProductInformationById(product.getProductInformation().getId());
+
+        List<Image> images = imageRepository.findImageByProductId(id);
+        if(images.size() > 0){
+            imageRepository.deleteAll(images);
+        }
+
+        List<Color> colors = colorRepository.findColorByProductId(id);
+        if(colors.size() > 0){
+            colorRepository.deleteAll(colors);
+        }
+
+        List<Size> sizes = sizeRepository.findSizesByProductId(id);
+        if(sizes.size() > 0 ){
+            sizeRepository.deleteAll(sizes);
         }
         productRepository.delete(product);
     }
@@ -73,7 +103,7 @@ public class ProductImplementService implements ProductService {
     public Product updateProduct(ProductUpdateRequest productUpdateRequesttRequestRequest, Long id) {
         Product product = productRepository.findProductById(id);
         if(product == null){
-            throw  new RuntimeException("Cannot find product by id : "+id);
+            throw  new UserNotFoundException("Cannot find product by id : "+id);
         }
         product.setTitle(productUpdateRequesttRequestRequest.getTitle());
         product.setPrice(productUpdateRequesttRequestRequest.getPrice());
@@ -83,22 +113,77 @@ public class ProductImplementService implements ProductService {
     }
 
     @Override
-    public List<Product> listAll() {
+    public List<ProductResponse > listAll() {
         List<Product> products = productRepository.findAll();
-        return products;
+        List<ProductResponse> productResponses = new ArrayList<>();
+        for (Product product : products) {
+            ProductResponse productResponse = new ProductResponse();
+            List<Image> images = imageRepository.findImageByProductId(product.getId());
+            List<Size> sizes = sizeRepository.findSizesByProductId(product.getId());
+            List<Color> colors = colorRepository.findColorByProductId(product.getId());
+            productResponse.setProduct(product);
+            productResponse.setSizes(sizes);
+            productResponse.setImages(images);
+            productResponse.setColors(colors);
+            productResponses.add(productResponse);
+        }
+        return productResponses;
     }
 
     @Override
-    public List<Product> listProductByShopId(Long id) {
-        return productRepository.findProductsByShopId(id);
+    public List<ProductResponse> listProductByShopId(Long id) {
+        List<Product> products = productRepository.findProductsByShopId(id);
+        List<ProductResponse> productResponses = new ArrayList<>();
+        for (Product product : products) {
+            ProductResponse productResponse = new ProductResponse();
+            List<Image> images = imageRepository.findImageByProductId(product.getId());
+            List<Size> sizes = sizeRepository.findSizesByProductId(product.getId());
+            List<Color> colors = colorRepository.findColorByProductId(product.getId());
+            productResponse.setProduct(product);
+            productResponse.setSizes(sizes);
+            productResponse.setImages(images);
+            productResponse.setColors(colors);
+            productResponses.add(productResponse);
+        }
+        return productResponses;
     }
 
     @Override
-    public Product findProductById(Long id) {
+    public ProductResponse findProductById(Long id) {
         Product product = productRepository.findProductById(id);
         if(product == null){
             throw  new RuntimeException("Cannot find product by id : "+id);
         }
-        return product;
+        ProductResponse productResponse = new ProductResponse();
+        List<Image> images = imageRepository.findImageByProductId(product.getId());
+        List<Size> sizes = sizeRepository.findSizesByProductId(product.getId());
+        List<Color> colors = colorRepository.findColorByProductId(product.getId());
+        productResponse.setProduct(product);
+        productResponse.setSizes(sizes);
+        productResponse.setImages(images);
+        productResponse.setColors(colors);
+        return productResponse;
+    }
+
+    @Override
+    public ProductPageResponse getProductByPage(int page, int limit, long id) {
+        Pageable pageable = PageRequest.of(page-1,limit);
+        Page<Product> productPage = productRepository.findProductByShopId(pageable,id);
+        Integer totalPage = productPage.getTotalPages();
+        Long totalElement = productPage.getTotalElements();
+        List<ProductResponse> productResponses = new ArrayList<>();
+        for (Product product : productPage){
+            ProductResponse productResponse = new ProductResponse();
+            List<Image> images = imageRepository.findImageByProductId(product.getId());
+            List<Size> sizes = sizeRepository.findSizesByProductId(product.getId());
+            List<Color> colors = colorRepository.findColorByProductId(product.getId());
+            productResponse.setProduct(product);
+            productResponse.setSizes(sizes);
+            productResponse.setImages(images);
+            productResponse.setColors(colors);
+            productResponses.add(productResponse);
+        }
+        ProductPageResponse productPageResponse = new ProductPageResponse(productResponses,totalPage,totalElement);
+        return productPageResponse;
     }
 }
