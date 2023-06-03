@@ -46,9 +46,7 @@ public class AddressImplementService implements AddressService {
 
     @Override
     public Address updateAddress(AddressRequest addressRequest) throws IOException {
-        System.out.println(addressRequest.getUserId());
-        Address address = addressRepository.findAddressByUserId(addressRequest.getUserId());
-        System.out.println(address);
+        Address address = addressRepository.findAddressById(addressRequest.getUserId());
         if(address == null) {
             throw new UserNotFoundException();
         }
@@ -65,7 +63,7 @@ public class AddressImplementService implements AddressService {
 
     @Override
     public Address findAddressById(AddressRequest addressRequest) throws IOException {
-        Address address = addressRepository.findAddressByUserId(addressRequest.getUserId());
+        Address address = addressRepository.findAddressById(addressRequest.getUserId());
         return address;
     }
 
@@ -79,9 +77,9 @@ public class AddressImplementService implements AddressService {
     }
 
     @Override
-    public Address findAddressByUserId(Long uid) {
-        Address address = addressRepository.findAddressByUserId(uid);
-        return address;
+    public List<Address> findAddressByUserId(Long uid) {
+        List<Address> addresses = addressRepository.getAddressesByUserId(uid);
+        return addresses;
     }
 
 }

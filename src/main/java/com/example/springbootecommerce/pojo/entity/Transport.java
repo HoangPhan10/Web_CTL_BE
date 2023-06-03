@@ -13,5 +13,7 @@ public class Transport {
 
     @Column(length = 45,nullable = false, unique = true)
     private String name;
+    @Column(length = 45,nullable = false, unique = true)
+    private Integer price;
 
 }

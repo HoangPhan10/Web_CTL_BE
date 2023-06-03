@@ -17,5 +17,5 @@ public interface AddressService {
     Address findAddressById(AddressRequest addressRequest) throws IOException;
     void deleteAddress(Long id);
 
-    Address findAddressByUserId(Long uid);
+    List<Address> findAddressByUserId(Long uid);
 }
