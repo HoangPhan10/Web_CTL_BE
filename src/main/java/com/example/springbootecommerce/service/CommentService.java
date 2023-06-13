@@ -1,11 +1,8 @@
 package com.example.springbootecommerce.service;
 
-import com.example.springbootecommerce.pojo.entity.Address;
 import com.example.springbootecommerce.pojo.entity.Comment;
-import com.example.springbootecommerce.pojo.requests.AddressRequest;
 import com.example.springbootecommerce.pojo.requests.CommentRequest;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface CommentService {

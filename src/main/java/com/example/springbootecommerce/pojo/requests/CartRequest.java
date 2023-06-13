@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class CartRequest {
     private Long userId;
     private Long productId;
-    private Integer quantity;
+    private Long quantity;
     private String size;
     private String color;
     private Long total;

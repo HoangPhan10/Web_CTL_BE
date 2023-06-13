@@ -33,19 +33,20 @@ public class CommentController {
     }
 
     @GetMapping("/product_comment")
-    public ResponseEntity<ObjectResponse> getListCommentAll(@RequestParam("id") Long id) {
-        List<Comment> commentList = commentService.getListCommentAll(id);
+    public ResponseEntity<ObjectResponse> getListCommentByProductId(@RequestParam("id") Long id) {
+        List<Comment> commentList = commentService.getListCommentByProductId(id);
+        return ResponseEntity.status(200).body(
+                new ObjectResponse(HttpStatus.OK, "Query list comment successfully", commentList)
+        );
+    }
+    @GetMapping("/list")
+    public ResponseEntity<ObjectResponse> getListCommentAll() {
+        List<Comment> commentList = commentService.listAll();
         return ResponseEntity.status(200).body(
                 new ObjectResponse(HttpStatus.OK, "Query list comment successfully", commentList)
         );
     }
 
-//    @PutMapping("/update")
-//    public ResponseEntity<ObjectResponse> updateComment(@RequestBody CommentRequest commentRequest) throws IOException {
-//        Comment updateComment = commentService.updateComment(commentRequest);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(
-//                new ObjectResponse(HttpStatus.CREATED, "Comment update successfully", updateComment));
-//    }
     @DeleteMapping("/delete_comment")
     public ResponseEntity<NotiResponse> deleteComment(@RequestParam(value = "id") Long id) {
         commentService.deleteComment(id);

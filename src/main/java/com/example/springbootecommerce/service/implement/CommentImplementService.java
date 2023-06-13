@@ -37,16 +37,17 @@ public class CommentImplementService implements CommentService {
             throw new RuntimeException("Cannot find product by id"+commentRequest.getId_product());
         }
         comment.setComment(commentRequest.getComment());
+        comment.setIdCart(commentRequest.getId_cart());
         comment.setRate(commentRequest.getRate());
         comment.setUser(user);
-        comment.setProduct(product);
+        comment.setIdProduct(commentRequest.getId_product());
         comment.setCreatedAt(new Date());
         return commentRepository.save(comment);
     }
 
     @Override
     public List<Comment> getListCommentByProductId(Long id) {
-            return commentRepository.findAll();
+        return commentRepository.findCommentsByIdProduct(id);
     }
 
     @Override
@@ -65,7 +66,7 @@ public class CommentImplementService implements CommentService {
 
     @Override
     public List<Comment> getListCommentAll(Long id) {
-        List<Comment> commentList = commentRepository.findCommentByproductId(id);
+        List<Comment> commentList = commentRepository.findCommentsByIdProduct(id);
         return commentList;
     }
 

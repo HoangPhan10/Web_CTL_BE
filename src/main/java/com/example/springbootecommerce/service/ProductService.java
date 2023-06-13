@@ -18,6 +18,7 @@ public interface ProductService {
     Product updateProduct(ProductUpdateRequest productUpdateRequest, Long id);
 
     List<ProductResponse> listAll();
+    List<ProductResponse> listProductByTypeId(Long typeId);
     List<ProductResponse> listProductByShopId(Long id);
 
     ProductResponse findProductById(Long id);

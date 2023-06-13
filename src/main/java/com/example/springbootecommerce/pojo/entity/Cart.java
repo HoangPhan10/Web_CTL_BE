@@ -17,11 +17,12 @@ public class Cart {
     @Column(nullable = false)
     private Long productId;
     @Column(nullable = false)
-    private Integer quantity;
+    private Long quantity;
     private String size;
     private String color;
     @Column(nullable = false)
     private Long total;
+    private Boolean deletedAt;
     private Date createdAt;
     private Date updatedAt;
 }

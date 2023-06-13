@@ -15,6 +15,6 @@ public class AddressRequest {
     private String phone;
 
     private String name_receiver;
-
     private Long userId;
+
 }

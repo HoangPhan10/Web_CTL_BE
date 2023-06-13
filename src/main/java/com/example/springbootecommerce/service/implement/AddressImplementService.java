@@ -9,6 +9,7 @@ import com.example.springbootecommerce.repository.AddressRepository;
 import com.example.springbootecommerce.repository.RoleRepository;
 import com.example.springbootecommerce.repository.UserRepository;
 import com.example.springbootecommerce.service.AddressService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.archivers.cpio.CpioArchiveOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+@Slf4j
 @Service
 public class AddressImplementService implements AddressService {
 
@@ -48,23 +50,18 @@ public class AddressImplementService implements AddressService {
     public Address updateAddress(AddressRequest addressRequest) throws IOException {
         Address address = addressRepository.findAddressById(addressRequest.getUserId());
         if(address == null) {
-            throw new UserNotFoundException();
+            throw new UserNotFoundException("Address not found for id " +addressRequest.getUserId());
         }
-        User user = userRepository.findUserById(addressRequest.getUserId());
-
         address.setAddress(addressRequest.getAddress());
         address.setName_receiver(addressRequest.getName_receiver());
         address.setPhone(addressRequest.getPhone());
-        address.setUser(user);
-        // No need to call addressRepository.save(address) as JPA will automatically track and update the changes when the transaction is committed
-
-        return addressRepository.save(address); // Save and return the updated address
+        return addressRepository.save(address);
     }
 
     @Override
     public Address findAddressById(AddressRequest addressRequest) throws IOException {
-        Address address = addressRepository.findAddressById(addressRequest.getUserId());
-        return address;
+//        Address address = addressRepository.findAddressById(addressRequest.getUserId());
+        return null;
     }
 
     @Override

@@ -14,9 +14,7 @@ public class UserRequestUpdate {
     private String username;
     @Email(message = "Email is a not valid email address")
     private String email;
-    private String card;
     private String name;
     private String role;
-    private String photo;
 }
 

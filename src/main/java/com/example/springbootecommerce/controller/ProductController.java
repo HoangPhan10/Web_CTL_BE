@@ -52,7 +52,13 @@ public class ProductController {
                 new ObjectResponse(HttpStatus.OK, "Query list product successfully", products)
         );
     }
-
+    @GetMapping("/type-by-id")
+    public ResponseEntity<ObjectResponse> getProductByTypeId(@RequestParam("id") Long id) {
+        List<ProductResponse> products = productService.listProductByTypeId(id);
+        return ResponseEntity.status(200).body(
+                new ObjectResponse(HttpStatus.OK, "Query list product successfully", products)
+        );
+    }
     @GetMapping("/shop-by-id-page")
     public ResponseEntity<ObjectResponse> getProductByPage(@RequestParam("page") int page, @RequestParam("limit") int limit, @RequestParam("id") long id) {
         ProductPageResponse productPageResponse = productService.getProductByPage(page, limit,id);

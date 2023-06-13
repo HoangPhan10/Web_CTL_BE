@@ -131,6 +131,23 @@ public class ProductImplementService implements ProductService {
     }
 
     @Override
+    public List<ProductResponse> listProductByTypeId(Long typeId) {
+        List<Product> products = productRepository.findProductsByTypeId(typeId);
+        List<ProductResponse> productResponses = new ArrayList<>();
+        for (Product product : products) {
+            ProductResponse productResponse = new ProductResponse();
+            List<Image> images = imageRepository.findImageByProductId(product.getId());
+            List<Size> sizes = sizeRepository.findSizesByProductId(product.getId());
+            List<Color> colors = colorRepository.findColorByProductId(product.getId());
+            productResponse.setProduct(product);
+            productResponse.setSizes(sizes);
+            productResponse.setImages(images);
+            productResponse.setColors(colors);
+            productResponses.add(productResponse);
+        }
+        return productResponses;
+    }
+    @Override
     public List<ProductResponse> listProductByShopId(Long id) {
         List<Product> products = productRepository.findProductsByShopId(id);
         List<ProductResponse> productResponses = new ArrayList<>();
@@ -169,6 +186,9 @@ public class ProductImplementService implements ProductService {
     public ProductPageResponse getProductByPage(int page, int limit, long id) {
         Pageable pageable = PageRequest.of(page-1,limit);
         Page<Product> productPage = productRepository.findProductByShopId(pageable,id);
+        if (id == 0) {
+            productPage = productRepository.findAll(pageable);
+        }
         Integer totalPage = productPage.getTotalPages();
         Long totalElement = productPage.getTotalElements();
         List<ProductResponse> productResponses = new ArrayList<>();

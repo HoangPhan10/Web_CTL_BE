@@ -14,11 +14,11 @@ public class Comment {
     @Column(nullable = false, length =200)
     private String comment;
     @Column(nullable = false, length =5)
-    private int rate ;
+    private long rate ;
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Product product;
+    private Long idProduct;
+    private Long idCart;
     private Date createdAt;
     private Date updatedAt;
 }

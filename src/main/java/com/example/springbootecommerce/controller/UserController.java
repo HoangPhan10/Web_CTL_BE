@@ -2,24 +2,20 @@ package com.example.springbootecommerce.controller;
 
 import com.example.springbootecommerce.pojo.entity.User;
 import com.example.springbootecommerce.pojo.requests.JwtRequest;
-import com.example.springbootecommerce.pojo.requests.AccountRegisterRequest;
-import com.example.springbootecommerce.pojo.requests.ResetPasswordRequest;
 import com.example.springbootecommerce.pojo.requests.UserRequest;
 import com.example.springbootecommerce.pojo.requests.UserRequestUpdate;
 import com.example.springbootecommerce.pojo.responses.NotiResponse;
 import com.example.springbootecommerce.pojo.responses.ObjectResponse;
+import com.example.springbootecommerce.pojo.responses.UserPageResponse;
 import com.example.springbootecommerce.service.UserService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.authenticator.SpnegoAuthenticator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @Slf4j
@@ -39,10 +35,15 @@ public class UserController {
     }
 
     @GetMapping("")
-    public ResponseEntity<ObjectResponse> getListUsers() {
-        List<User> users = userService.listAll();
+    ResponseEntity<ObjectResponse> getAllUser(@RequestParam(value = "limit",required = false) Integer limit,@RequestParam(value = "page",required = false) Integer page){
+        UserPageResponse userPageResponse = null;
+        if (limit!=null&&page!=null) {
+            userPageResponse = userService.getUserByPage(page,limit);
+        }else{
+            userPageResponse = userService.getUserByPage(1,5);
+        }
         return ResponseEntity.status(200).body(
-                new ObjectResponse(HttpStatus.OK, "Query list user successfully", users)
+                new ObjectResponse(HttpStatus.OK,"Query list user successfully",userPageResponse)
         );
     }
 
