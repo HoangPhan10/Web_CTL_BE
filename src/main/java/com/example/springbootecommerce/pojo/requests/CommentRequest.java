@@ -12,9 +12,9 @@ public class CommentRequest {
     @NotNull(message = "comment not null")
     private String comment;
     @NotNull(message = "rate not null")
-    private int rate;
-    @NotNull(message = "id_product not null")
+    private long rate;
     private Long id_product;
+    private Long id_cart;
     @NotNull(message = "id_user not null")
     private Long id_user;
 }

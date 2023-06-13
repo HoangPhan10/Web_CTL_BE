@@ -11,6 +11,6 @@ public interface CommentRepository extends JpaRepository<Comment,Long> {
 
     List<Comment> findAll();
 
-    List<Comment> findCommentByproductId(Long id);
+    List<Comment> findCommentsByIdProduct(Long id);
 
 }

@@ -2,6 +2,7 @@ package com.example.springbootecommerce.repository;
 
 import com.example.springbootecommerce.pojo.entity.Product;
 import com.example.springbootecommerce.pojo.entity.Shop;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +17,8 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product,Long> {
     Product findProductById(Long id);
     Page<Product> findProductByShopId(Pageable pageable ,long shopId);
+    Page<Product> findAll(Pageable pageable);
     List<Product> findProductsByShopId(long shopId);
+    List<Product> findProductsByTypeId(long typeId);
 
 }

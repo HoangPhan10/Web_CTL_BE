@@ -48,6 +48,7 @@ import java.util.List;
             throw new UserNotFoundException("User not found for user id = "+cartRequest.getUserId());
         }
         Cart cart = new Cart();
+        cart.setDeletedAt(false);
         cart.setUserId(cartRequest.getUserId());
         cart.setProductId(cartRequest.getProductId());
         cart.setQuantity(cartRequest.getQuantity());
@@ -60,12 +61,16 @@ import java.util.List;
     }
 
     @Override
-    public Cart getCartById(Long id) {
+    public CartResponse getCartById(Long id) {
         Cart cart = cartRepository.getCartById(id);
         if (cart == null) {
             throw new UserNotFoundException("Cart not found for cart id = "+id);
         }
-        return cart;
+        CartResponse cartResponse = new CartResponse();
+        ProductResponse productResponse =  productService.findProductById(cart.getProductId());
+        cartResponse.setProductResponse(productResponse);
+        cartResponse.setCart(cart);
+        return cartResponse;
     }
 
     @Override
@@ -75,7 +80,7 @@ import java.util.List;
         if (user == null) {
             throw new UserNotFoundException("User not found for user id = "+id);
         }
-        List<Cart> carts = cartRepository.getCartsByUserId(id);
+        List<Cart> carts = cartRepository.getCartsByUserIdAndDeletedAt(id,false);
         for(Cart cart :carts){
             CartResponse cartResponse = new CartResponse();
             ProductResponse productResponse =  productService.findProductById(cart.getProductId());
@@ -93,7 +98,8 @@ import java.util.List;
         if (cart == null) {
             throw new UserNotFoundException("Cart not found for cart id = "+id);
         }
-        cartRepository.deleteCartById(id);
+        cart.setDeletedAt(true);
+        cartRepository.save(cart);
     }
 
 

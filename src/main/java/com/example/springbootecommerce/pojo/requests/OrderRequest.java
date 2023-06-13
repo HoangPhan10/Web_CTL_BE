@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class VnpayRequest {
-    private String content_pay;
-    private Long amount;
-    private Long[] list_id_order;
+public class OrderRequest {
+    private Long idAddress;
+    private Long idPayment;
+    private Long idUser;
+    private OrderRequestArr[] order;
 }

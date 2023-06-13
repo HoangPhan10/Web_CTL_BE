@@ -24,7 +24,7 @@ public class Product {
 
     @Column(nullable = false, length =20)
     private long quantity;
-
+    private long sold = 0;
     private Date createdAt;
     private Date updatedAt;
 

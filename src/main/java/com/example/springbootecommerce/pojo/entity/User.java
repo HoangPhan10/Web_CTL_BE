@@ -27,6 +27,7 @@ public class User {
     private String card;
     @Column(length = 45,nullable = false)
     private String name;
+    private Boolean isActive = true;
     private Date createdAt;
     private Date updatedAt;
     @ManyToOne(fetch = FetchType.EAGER)

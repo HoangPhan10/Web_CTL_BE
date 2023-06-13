@@ -42,7 +42,7 @@ public class CartController {
 
     @GetMapping("/get")
     public ResponseEntity<ObjectResponse> getCartById(@RequestParam("id") Long id){
-        Cart cart = cartService.getCartById(id);
+        CartResponse cart = cartService.getCartById(id);
         return ResponseEntity.status(200).body(
                 new ObjectResponse(HttpStatus.OK, "Query cart by cart id successfully", cart)
         );

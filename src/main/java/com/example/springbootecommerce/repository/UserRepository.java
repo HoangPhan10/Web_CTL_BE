@@ -12,5 +12,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     void deleteUserById(long id);
     Page<User> findAll(Pageable pageable);
 
-    User getUserByEmail(String email);
+    Page<User> getUsersByIsActive(Pageable pageable,boolean isActive);
+
+    User getUserByEmailAndIsActive(String email,boolean isActive);
 }
