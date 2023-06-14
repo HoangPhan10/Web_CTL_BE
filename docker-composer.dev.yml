@@ -13,14 +13,14 @@ services:
       MYSQL_USER: phanhoang
       MYSQL_PASSWORD: 10022002
       MYSQL_ROOT_PASSWORD: 10022002
-      MYSQL_DATABASE: StudentManagement
+      MYSQL_DATABASE: peer-market
     networks:
       - backend
   app-springboot-container:
-    image: phanhoang102/docker-composer-springboot:v1.0.0
+    image: phanhoang102/springboot-docker:v1.0.0
     container_name: app-springboot-container
     ports:
-      - 8085:8083
+      - 8080:8083
     networks:
       - backend
     volumes:
