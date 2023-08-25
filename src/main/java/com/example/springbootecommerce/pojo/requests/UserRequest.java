@@ -1,6 +1,5 @@
 package com.example.springbootecommerce.pojo.requests;
 
-
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,8 +16,6 @@ public class UserRequest {
     private String email;
     @Length(min = 6,message = "Password must be a character more than 6 characters")
     private String password;
-    private String card;
-    private String name;
+
     private String role;
-    private String photo;
 }

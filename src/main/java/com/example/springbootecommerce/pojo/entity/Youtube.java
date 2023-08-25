@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "images")
+@Table(name = "youtube")
 @Data
-public class Image {
+public class Youtube {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

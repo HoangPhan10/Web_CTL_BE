@@ -1,8 +1,4 @@
 package com.example.springbootecommerce;
-
-import com.example.springbootecommerce.pojo.entity.Role;
-import com.example.springbootecommerce.repository.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

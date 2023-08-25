@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -50,35 +51,8 @@ public class SecurityConfig {
                                 .requestMatchers("/auth/login").permitAll()
                                 .requestMatchers("/auth/*").permitAll()
                                 .requestMatchers("/users/*").permitAll()
-                                .requestMatchers("/address/*").permitAll()
-                                .requestMatchers("/address").permitAll()
-                                .requestMatchers("/comment/*").permitAll()
-                                .requestMatchers("/comment").permitAll()
-                                .requestMatchers("/orders/*").permitAll()
-                                .requestMatchers("/orders").permitAll()
-                                .requestMatchers("/payment/*").permitAll()
-                                .requestMatchers("/payment").permitAll()
-                                .requestMatchers("/payment/vnpay/success").permitAll()
-                                .requestMatchers("/shop/*").permitAll()
-                                .requestMatchers("/shop").permitAll()
-                                .requestMatchers("/product_detail/*").permitAll()
-                                .requestMatchers("/product_detail").permitAll()
-                                .requestMatchers("/product/*").permitAll()
-                                .requestMatchers("/product").permitAll()
-                                .requestMatchers("/transports/*").permitAll()
-                                .requestMatchers("/transports").permitAll()
-                                .requestMatchers("/detail/*").permitAll()
-                                .requestMatchers("/detail").permitAll()
-                                .requestMatchers("/transport/*").permitAll()
-                                .requestMatchers("/transport").permitAll()
-                                .requestMatchers("/carts/*").permitAll()
-                                .requestMatchers("/carts").permitAll()
-                                .requestMatchers("/users").permitAll()
-                                .requestMatchers("/role").permitAll()
-                                .requestMatchers("/role/save").permitAll()
-                                .requestMatchers("/users/export/csv").permitAll()
-                                .requestMatchers("/users/export/excel").permitAll()
-                                .requestMatchers("/users/export/pdf").permitAll()
+                                .requestMatchers("/portfolio/**").permitAll()
+                                .requestMatchers("/portfolio").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -99,12 +73,16 @@ public class SecurityConfig {
 
     @Bean
     UrlBasedCorsConfigurationSource configuration(){
-        CorsConfiguration configuration = new CorsConfiguration() ;
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-        configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
+        String allowPattern = "http://app-springboot-container";
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedMethods(Collections.singletonList("POST,GET,DELETE,PUT"));
+        configuration.setAllowedHeaders(Collections.singletonList("Special-Request-Header"));
+        configuration.setAllowedOriginPatterns(Arrays.asList(allowPattern.split(",")));
+        configuration.setAllowCredentials(true);
+        configuration.applyPermitDefaultValues();
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**",configuration);
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 

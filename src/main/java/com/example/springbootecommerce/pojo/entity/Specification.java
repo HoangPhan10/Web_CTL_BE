@@ -4,13 +4,14 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "images")
+@Table(name = "specification")
 @Data
-public class Image {
+public class Specification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String url;
+    private String key;
+    private String value;
     @ManyToOne(fetch = FetchType.EAGER)
     private Product product;
 }
