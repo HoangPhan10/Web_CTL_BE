@@ -49,10 +49,15 @@ public class SecurityConfig {
                 .and().authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers("/auth/login").permitAll()
-                                .requestMatchers("/auth/*").permitAll()
-                                .requestMatchers("/users/*").permitAll()
-                                .requestMatchers("/portfolio/**").permitAll()
+                                .requestMatchers("/users/save").permitAll()
+                                .requestMatchers("/contact").permitAll()
+                                .requestMatchers("/message/save").permitAll()
                                 .requestMatchers("/portfolio").permitAll()
+                                .requestMatchers("/portfolio/children").permitAll()
+                                .requestMatchers("/product").permitAll()
+                                .requestMatchers("/product/parent").permitAll()
+                                .requestMatchers("/product/type").permitAll()
+                                .requestMatchers("/product/get").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

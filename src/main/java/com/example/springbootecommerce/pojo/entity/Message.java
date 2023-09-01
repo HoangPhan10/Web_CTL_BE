@@ -1,17 +1,19 @@
 package com.example.springbootecommerce.pojo.entity;
 
+
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "images")
+@Table(name = "message")
 @Data
-public class Image {
+public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 65535)
-    private String url;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Product product;
+
+    private String name;
+    private String phone;
+    private String email;
+    private String content;
 }

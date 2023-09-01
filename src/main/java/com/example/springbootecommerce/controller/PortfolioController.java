@@ -79,5 +79,11 @@ public class PortfolioController {
                 new ObjectResponse(HttpStatus.CREATED,"Delete Portfolio Children Successfully",null)
         );
     }
-
+    @GetMapping("/children")
+    public ResponseEntity<ObjectResponse> getPortfolioChildren(@RequestParam("id") Long id){
+        List<ChildrenPortfolio> childrenPortfolios =  portfolioService.getChildrenPortfoliosByIdPortfolio(id);
+        return ResponseEntity.ok().body(
+                new ObjectResponse(HttpStatus.CREATED,"Delete Portfolio Children Successfully",childrenPortfolios)
+        );
+    }
 }

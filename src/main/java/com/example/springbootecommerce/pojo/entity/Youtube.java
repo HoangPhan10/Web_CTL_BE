@@ -10,6 +10,7 @@ public class Youtube {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 65535)
     private String url;
     @ManyToOne(fetch = FetchType.EAGER)
     private Product product;

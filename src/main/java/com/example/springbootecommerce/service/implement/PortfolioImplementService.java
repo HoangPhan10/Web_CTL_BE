@@ -134,4 +134,11 @@ public class PortfolioImplementService implements PortfolioService {
         }
         childrenPortfolioRepository.deleteById(id);
     }
+
+    @Override
+    public List<ChildrenPortfolio> getChildrenPortfoliosByIdPortfolio(Long id) {
+        List<ChildrenPortfolio> childrenPortfolios =
+                childrenPortfolioRepository.getChildrenPortfolioByPortfolioId(id);
+        return childrenPortfolios;
+    }
 }

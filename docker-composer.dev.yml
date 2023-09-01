@@ -1,5 +1,5 @@
 version: "3.8"
-  #Khai bao container
+#Khai bao container
 services:
   mysql-springboot-container:
     image: mysql:8.0.32
@@ -10,14 +10,14 @@ services:
       - mysql-springboot-data:/var/lib/mysql
       - mysql-springboot-config-deamond:/etc/mysql/conf.d
     environment:
-      MYSQL_USER: phanhoang
-      MYSQL_PASSWORD: 10022002
-      MYSQL_ROOT_PASSWORD: 10022002
-      MYSQL_DATABASE: peer-market
+      MYSQL_USER: ctl
+      MYSQL_PASSWORD: 12345678
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_DATABASE: web-ctl
     networks:
       - backend
   app-springboot-container:
-    image: phanhoang102/springboot-docker:v1.0.0
+    image: phanhoang102/web-ctl-be:v1.0.0
     container_name: app-springboot-container
     ports:
       - 8080:8083
@@ -25,10 +25,16 @@ services:
       - backend
     volumes:
       - ./:/app
+  web-ctl-container:
+    image: phanhoang102/web-ctl-fe:v1.0.0
+    container_name: web-ctl-container
+    ports:
+      - 3000:3000
+    networks:
+      - backend
 networks:
   backend:
     name: springboot-app-network
 volumes:
   mysql-springboot-data:
   mysql-springboot-config-deamond:
-

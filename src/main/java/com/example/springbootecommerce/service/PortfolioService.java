@@ -18,4 +18,5 @@ public interface PortfolioService {
     Portfolio updatePortfolio(PortfolioRequest portfolioRequest,Long id);
     void deletePortfolioById(Long id);
     void deletePortfolioChildrenById(Long id);
+    List<ChildrenPortfolio> getChildrenPortfoliosByIdPortfolio(Long id);
 }

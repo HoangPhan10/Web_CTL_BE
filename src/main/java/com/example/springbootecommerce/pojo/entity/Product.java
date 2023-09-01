@@ -10,11 +10,17 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 65535)
     private String url;
+    @Column(length = 65535)
     private String title;
+    @Column(length = 65535)
     private String parent;
+    @Column(length = 65535)
     private String type;
+    @Column(length = 65535)
     private String description;
+    private boolean status = true;
     @Column(length = 65535)
     private String html_description;
 }
